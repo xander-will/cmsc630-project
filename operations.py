@@ -90,11 +90,12 @@ def Quanitize(img, delta):
 def Linear(img, filter):
     filter = np.array(filter)
     f_size = filter.shape[0] * filter.shape[1]
-    v, h = (img.shape[0] - 1) // 2, (img.shape[1] - 1) // 2
+    v, h = (filter.shape[0] - 1) // 2, (filter.shape[1] - 1) // 2
 
     out = np.copy(img)
     for i in range(v, img.shape[0]-v):
         for j in range(h, img.shape[1]-h):
-            out[i-v:i+v, j-h:j+h] = img[i-v:i+v, j-h:j+h] * filter // f_size
+            window = img[i-v:i+v+1, j-h:j+h+1] * filter
+            out[i][j] = np.mean(window)
 
     return out

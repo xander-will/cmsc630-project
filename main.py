@@ -58,6 +58,12 @@ for img_path in img_paths:
         out_path = "out/" + img_name + "quan.bmp"
         imageio.imwrite(out_path, out)
 
+    ##  Linear
+    if config["linear"]["active"]:
+        out = op.Linear(img_grey, config["linear"]["filter"])
+        out_path = "out/" + img_name + "lin.bmp"
+        imageio.imwrite(out_path, out)
+
 ##  TODO: create averaged histogram pics
 
 for oper in runtime_dict:

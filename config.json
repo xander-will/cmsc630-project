@@ -18,11 +18,11 @@
         "equalize": true
     },
     "quanitize": {
-        "active": true,
+        "active": false,
         "delta": 25
     },
     "linear": {
         "active": true,
-        "filter": [[1,1,1],[1,1,1],[1,1,1]]
+        "filter": [[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1]]
     }
 }
