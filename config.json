@@ -1,28 +1,41 @@
 {
     "snp": {
-        "active": false,
+        "active": true,
         "intensity": 5
     },
     "gauss": {
-        "active": false,
+        "active": true,
         "min": 0,
         "max": 255,
         "std_dev": 0.1
     },
     "color_spec": {
-        "active": false,
+        "active": true,
         "color": "blue"
     },
     "histogram": {
-        "active": false,
-        "equalize": true
+        "active": true,
+        "equalize": false
     },
     "quanitize": {
-        "active": false,
-        "delta": 25
+        "active": true,
+        "delta": 25,
+        "msqe": false
     },
     "linear": {
         "active": true,
-        "filter": [[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,1,1,1]]
+        "filter": [
+            [1,1,1],
+            [1,1,1],
+            [1,1,1]
+        ]
+    },
+    "median": {
+        "active": true,
+        "filter": [
+            [1,2,1],
+            [2,3,2],
+            [1,2,1]
+        ]
     }
 }

@@ -1,7 +1,7 @@
 
 import imageio 
 import json
-import matplotlib as mpl
+import matplotlib.pyplot as plt
 import re
 from glob import glob
 
@@ -12,9 +12,11 @@ with open("config.json", "r") as f:
     config = json.load(f)
 
 img_paths = glob("img/*.BMP")
+total_msqe = 0
 
 for img_path in img_paths:
     img_name = img_path[4:-4]  # hardcoded removal of 'img\' and '.bmp'
+    print("Processing ", img_name)
 
     img_color = imageio.imread(img_path)
     img_grey  = imageio.imread(img_path, pilmode="L")
@@ -58,15 +60,34 @@ for img_path in img_paths:
         out_path = "out/" + img_name + "quan.bmp"
         imageio.imwrite(out_path, out)
 
+        if config["quanitize"]["msqe"]:
+            total_msqe += op.MSQE(img_grey, out)
+
     ##  Linear
     if config["linear"]["active"]:
         out = op.Linear(img_grey, config["linear"]["filter"])
         out_path = "out/" + img_name + "lin.bmp"
         imageio.imwrite(out_path, out)
 
-##  TODO: create averaged histogram pics
+    ##  Median
+    if config["median"]["active"]:
+        out = op.Median(img_grey, config["median"]["filter"])
+        out_path = "out/" + img_name + "med.bmp"
+        imageio.imwrite(out_path, out)
 
+for group in op.histogram_dict:
+    avg_hist = op.histogram_dict[group]
+    plt.plot(avg_hist[1] / avg_hist[0])
+    plt.title(f'Averaged Histogram: {group}')
+    plt.xlabel('Pixel Intensity')
+    plt.ylabel('Frequency')
+    plt.savefig('hist/' + group + '.png')
+
+print("\n-------\n")
 for oper in runtime_dict:
     print(oper)
     print(f"Overall runtime: {runtime_dict[oper]} secs")
-    print(f"Average runtime: {runtime_dict[oper]/len(img_paths)} secs")
+    print(f"Average runtime: {runtime_dict[oper]/len(img_paths)} secs\n")
+
+if config["quanitize"]["msqe"]:
+    print(f"Average MSQE: {total_msqe / len(img_paths)}")

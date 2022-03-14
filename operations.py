@@ -86,6 +86,14 @@ def HistEqualize(img, hist):
 def Quanitize(img, delta):
     return delta*np.rint(img / delta) + delta//2
 
+def MSQE(img, q_img):
+    sum = 0
+    for i in range(img.shape[0]):
+        for j in range(img.shape[1]):
+            sum += (img[i,j] - q_img[i,j])**2 / 256
+
+    return sum / (img.shape[0]*img.shape[1])
+
 @timer
 def Linear(img, filter):
     filter = np.array(filter)
@@ -97,5 +105,31 @@ def Linear(img, filter):
         for j in range(h, img.shape[1]-h):
             window = img[i-v:i+v+1, j-h:j+h+1] * filter
             out[i][j] = np.mean(window)
+
+    return out
+
+def _weighted_median(window, filter):
+    full = np.zeros(np.sum(filter))
+    window, filter = np.ndarray.flatten(window), np.ndarray.flatten(filter)
+
+    j = 0
+    for i in range(len(window)):
+        for _ in range(filter[i]):
+            full[j] = window[i]
+            j += 1
+
+    return np.median(full)
+
+@timer
+def Median(img, filter):
+    filter = np.array(filter)
+    f_size = filter.shape[0] * filter.shape[1]
+    v, h = (filter.shape[0] - 1) // 2, (filter.shape[1] - 1) // 2
+
+    out = np.copy(img)
+    for i in range(v, img.shape[0]-v):
+        for j in range(h, img.shape[1]-h):
+            window = img[i-v:i+v+1, j-h:j+h+1]
+            out[i][j] = _weighted_median(window, filter)
 
     return out
