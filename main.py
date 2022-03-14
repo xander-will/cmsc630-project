@@ -82,6 +82,7 @@ for group in op.histogram_dict:
     plt.xlabel('Pixel Intensity')
     plt.ylabel('Frequency')
     plt.savefig('hist/' + group + '.png')
+    plt.clf()
 
 print("\n-------\n")
 for oper in runtime_dict:

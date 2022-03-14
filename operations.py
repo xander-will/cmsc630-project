@@ -76,9 +76,6 @@ def HistEqualize(img, hist):
     for i in range(out.shape[0]):
         for j in range(out.shape[1]):
             out[i][j] = h[out[i][j]]
-
-    plt.plot(np.cumsum(np.histogram(out, 256)[0]))
-    plt.show()
     
     return out
 
