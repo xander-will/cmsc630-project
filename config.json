@@ -18,7 +18,7 @@
         "equalize": false
     },
     "quanitize": {
-        "active": true,
+        "active": false,
         "delta": 100,
         "msqe": true
     },
@@ -37,5 +37,32 @@
             [2,3,2],
             [1,2,1]
         ]
+    },
+    "prewitt": {
+        "active": false,
+        "sigma": 8
+    },
+    "sobel": {
+        "active": false,
+        "sigma": 12
+    },
+    "laplace": {
+        "active": false,
+        "sigma": 8
+    },
+    "dilation": {
+        "active": false,
+        "grid_size": 5
+    },
+    "erosion": {
+        "active": false,
+        "grid_size": 5
+    },
+    "seg_thresh": {
+        "active": false
+    },
+    "seg_cluster": {
+        "active": true,
+        "k": 10
     }
 }

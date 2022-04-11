@@ -20,6 +20,7 @@ for img_path in img_paths:
 
     img_color = imageio.imread(img_path)
     img_grey  = imageio.imread(img_path, pilmode="L")
+    print(img_grey.shape)
 
     ##  Salt-and-Pepper Noise
     if config["snp"]["active"]:
@@ -74,6 +75,49 @@ for img_path in img_paths:
         out = op.Median(img_grey, config["median"]["filter"])
         out_path = "out/" + img_name + "med.bmp"
         imageio.imwrite(out_path, out)
+
+    ##  Prewitt
+    if config["prewitt"]["active"]:
+        out = op.Prewitt(img_grey, config["prewitt"]["sigma"])
+        out_path = "out/" + img_name + "pre.bmp"
+        imageio.imwrite(out_path, out)
+
+    ##  Sobel
+    if config["sobel"]["active"]:
+        out = op.Sobel(img_grey, config["sobel"]["sigma"])
+        out_path = "out/" + img_name + "sob.bmp"
+        imageio.imwrite(out_path, out)
+
+    ##  Laplace
+    if config["laplace"]["active"]:
+        out = op.Laplace(img_grey, config["laplace"]["sigma"])
+        out_path = "out/" + img_name + "lap.bmp"
+        imageio.imwrite(out_path, out)
+
+    ##  Dilation
+    if config["dilation"]["active"]:
+        out = op.Dilation(img_grey, config["dilation"]["grid_size"])
+        out_path = "out/" + img_name + "dil.bmp"
+        imageio.imwrite(out_path, out)
+
+    ##  Erosion
+    if config["erosion"]["active"]:
+        out = op.Erosion(img_grey, config["erosion"]["grid_size"])
+        out_path = "out/" + img_name + "ero.bmp"
+        imageio.imwrite(out_path, out)
+
+    ##  Thresholding Segmentation
+    if config["seg_thresh"]["active"]:
+        out = op.ThresholdingSeg(img_grey)
+        out_path = "out/" + img_name + "segth.bmp"
+        imageio.imwrite(out_path, out)
+
+    ##  Clustering Segmentation
+    if config["seg_cluster"]["active"]:
+        out = op.ClusteringSeg(img_color, config["seg_cluster"]["k"])
+        out_path = "out/" + img_name + "segcl.bmp"
+        imageio.imwrite(out_path, out)
+        break
 
 for group in op.histogram_dict:
     avg_hist = op.histogram_dict[group]
