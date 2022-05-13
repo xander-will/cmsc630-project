@@ -108,7 +108,7 @@ for img_path in img_paths:
 
     ##  Thresholding Segmentation
     if config["seg_thresh"]["active"]:
-        out = op.ThresholdingSeg(img_grey)
+        out, _ = op.ThresholdingSeg(img_grey)
         out_path = "out/" + img_name + "segth.bmp"
         imageio.imwrite(out_path, out)
 

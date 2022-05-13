@@ -245,7 +245,7 @@ def ThresholdingSeg(img):
     sig_w = sig_o * p_o + sig_b * p_b
     min_T = np.argmin(sig_w)
 
-    return np.where(img < min_T, 0, 255)
+    return np.where(img < min_T, 0, 255), min_T
 
 def _find_closest_mean(elem, means):
     results = [np.linalg.norm(elem - mean) for mean in means]
