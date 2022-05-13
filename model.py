@@ -83,7 +83,7 @@ if __name__ == "__main__":
                 flag = True
     
     accuracies = {}
-    for k in [1, 3, 5, 7, 9]:
+    for k in [1, 3, 5, 7, 9, 15, 21, 35]:
         accuracies[k] = Model(items, k)
 
     print("---------")
